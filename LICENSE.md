@@ -1,85 +1,36 @@
-魈公引擎 · fakecode 许可证
-==========================
+MIT License
 
-版本 1.0（2026-11-17）
+Copyright (c) 2026 魈公 (GitHub: @wyhr-game)
 
-本许可证适用于本仓库中的全部源代码、文档、示例与打包脚本
-（下称"本项目"）。
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-著作权人：魈公（GitHub: @wyhr-game）
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-
-一、允许做的事
---------------
-
-1. 阅读、学习、研究本项目的源代码。
-2. 在你自己的电脑上运行本项目。
-3. 复制、修改本项目，用于你自己的**非商业**用途。
-4. 把修改后的版本分享给他人，前提是遵守本许可证全部条款。
-
-
-二、禁止做的事
---------------
-
-1. **禁止任何商业用途。** 包括但不限于：
-   - 出售本项目或其修改版；
-   - 把本项目（或其主要部分）集成进商业产品、付费服务；
-   - 在收费课程、付费社群、付费工具包中提供本项目；
-   - 以本项目招揽客户、承接定制的收费项目。
-
-2. **禁止移除或篡改署名。** 不得删除、遮挡、改写：
-   - 源代码中的作者声明；
-   - 界面上的「魈公引擎」名称与作者信息；
-   - 本许可证文件。
-
-3. **禁止"换皮"发布。** 不得将本项目改名为其他名称、
-   替换作者信息后重新发布，使人误以为是他人作品。
-
-
-三、必须做的事
---------------
-
-1. **保留署名。** 任何副本、修改版、衍生作品，都必须以显眼方式注明：
-
-   原作者：魈公
-   原始地址：https://github.com/wyhr-game/fakecode
-
-2. **沿用同一协议。** 修改版与衍生作品必须继续使用本许可证，
-   不得改为更宽松的协议。
-
-3. **说明修改。** 发布修改版时，需注明你修改了哪些内容。
-
-
-四、免责
---------
-
-本项目按"现状"提供，不附带任何明示或默示的担保。
-作者不对使用本项目所产生的任何后果负责。
-
-本工具的设计前提是**只读取你拥有合法访问权的目录**，
-并**不在磁盘写入任何内容**。使用者不得将其用于违法用途。
-
-
-五、终止
---------
-
-违反上述任一条款，本许可证对你自动终止。
-终止后如需继续使用，须取得著作权人的书面许可。
-
-
-六、其他
---------
-
-本许可证未授予商标权、专利权。
-如需商业授权，请通过 GitHub Issue 联系作者。
-
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ------------------------------------------------------------------------
 
-English summary (not a separate license, only a summary):
+中文说明（仅供参考，不改变上面的 MIT 条款）
 
-Source-available. Personal and educational use allowed.
-Commercial use of any kind is prohibited.
-Attribution to "魈公" and a link to the original repository are required.
-Derivative works must remain under this same license.
-Provided "as is", without warranty of any kind.
+1. 允许商用，包括打包出售、集成进商业产品、在付费服务中使用。
+2. 必须保留上面的版权声明和本许可证全文。
+3. 修改后发布，建议在说明里注明"基于 魈公引擎 修改"并附原仓库链接。
+4. 软件按"现状"提供，作者不承担使用后果。
+
+关于名字（这是请求，不是许可证条款）
+
+「魈公引擎」是原作者的名字。你改了、卖了都可以，但请不要把
+你的版本直接叫「魈公引擎」并声称是你原创——那属于另外的法律问题
+（商标与不正当竞争），不在这份许可证的范围内。
