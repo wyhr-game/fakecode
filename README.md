@@ -107,7 +107,7 @@ pyinstaller xiaogong-engine.spec
           （这是商标和不正当竞争的事，不在许可证范围内）
 ```
 
-详见 [LICENSE.md](LICENSE.md)。
+详见 [LICENSE](LICENSE)。
 
 ## 目录
 

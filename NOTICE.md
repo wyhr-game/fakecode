@@ -1,6 +1,6 @@
 ﻿# 关于许可证（中文说明）
 
-本仓库采用 **MIT 许可证**（全文见 [LICENSE.md](LICENSE.md)）。
+本仓库采用 **MIT 许可证**（全文见 [LICENSE](LICENSE)）。
 
 ## 你能做什么
 
