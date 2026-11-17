@@ -1,0 +1,8 @@
+  test/
+  test/** 
+  .git/**
+  node_modules/**
+  *.vsix
+  _*
+  _probe.js
+  _addtype.py

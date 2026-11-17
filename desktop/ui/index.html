@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>魈公引擎</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ 启动界面 ============ -->
+<div id="splash">
+  <div class="card">
+    <div class="brand">
+      <h1>魈公引擎</h1>
+      <span class="en">XIAOGONG ENGINE</span>
+      <span class="ver" id="ver">v0.1.0</span>
+    </div>
+    <div class="tag">把代码按人的节奏，重放一遍</div>
+    <div class="free">纯公益 · 永久免费 · 禁止商用 · 源码公开</div>
+
+    <div class="src" id="srcBox">
+      <span>代码来源</span>
+      <b id="srcName">未选择</b>
+      <span id="srcMeta" style="margin-left:auto"></span>
+      <button id="pickBtn" style="padding:5px 12px;font-size:12px">选择目录…</button>
+    </div>
+
+    <div class="row">
+      <label>生成速度</label>
+      <input type="range" id="speed" min="0" max="1000" step="1" value="500">
+      <input type="number" id="speedNum" min="0.1" max="1000" step="0.1" value="1"
+             style="width:74px;background:#0c1218;border:1px solid #23303d;color:#cfe0ee;
+                    border-radius:6px;padding:3px 6px;font-family:var(--mono);font-size:12px">
+      <span class="val" id="speedVal">1.0×</span>
+    </div>
+    <div class="row" style="margin-top:2px">
+      <label></label>
+      <span style="font-size:11px;color:#556575">常用：</span>
+      <button data-speed="0.5" class="mini">0.5×</button>
+      <button data-speed="1" class="mini">1×</button>
+      <button data-speed="3" class="mini">3×</button>
+      <button data-speed="10" class="mini">10×</button>
+      <button data-speed="100" class="mini">100×</button>
+      <button data-speed="1000" class="mini">1000×</button>
+      <span style="font-size:11px;color:#3f4c58;margin-left:auto">0.1 ~ 1000×，也能直接填数字</span>
+    </div>
+    <div class="row">
+      <label>错误率</label>
+      <input type="range" id="errRate" min="0" max="5" step="0.1" value="1.2">
+      <span class="val" id="errVal">1.2%</span>
+    </div>
+    <div class="row">
+      <label>键盘音效</label>
+      <input type="range" id="vol" min="0" max="100" step="1" value="0">
+      <span class="val" id="volVal">关</span>
+    </div>
+
+    <div class="btns">
+      <button class="primary" id="startBtn" disabled>开始</button>
+      <button id="resumeBtn" disabled>继续上次</button>
+      <button id="quitBtn">退出</button>
+    </div>
+
+    <div class="foot">
+      作者 魈公 · 本工具不生成代码、不修改源文件、不联网 · 禁止套壳售卖
+      <span id="slotInfo" style="float:right"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 主界面 ============ -->
+<div id="app">
+  <div class="titlebar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <span id="titleFile">魈公引擎</span>
+    <span class="mid" id="titleMid">—</span>
+  </div>
+
+  <div class="body">
+    <div class="actbar">
+      <b class="on">▤</b><b>⌕</b><b>⑂</b><b>▷</b><b>⧉</b>
+    </div>
+
+    <div class="side">
+      <h4>EXPLORER</h4>
+      <div class="tree" id="tree"></div>
+    </div>
+
+    <div class="editor">
+      <div class="tabs"><div class="tab on" id="tab">untitled-1.py</div></div>
+      <div class="crumb" id="crumb">—</div>
+      <div class="code-wrap">
+        <div class="code" id="code"></div>
+        <div class="minimap" id="mini"></div>
+      </div>
+      <div class="term">
+        <div class="ph"><b>TERMINAL</b><span>OUTPUT</span><span>PROBLEMS</span></div>
+        <div class="pb" id="log"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="statusbar">
+    <span>⑂ —</span>
+    <span id="stFile">—</span>
+    <span class="r">
+      <span id="stLn">Ln 1, Col 1</span>
+      <span>Spaces: 4</span><span>UTF-8</span><span>LF</span>
+      <span>Python</span><span id="stPct">0%</span>
+    </span>
+  </div>
+</div>
+
+<!-- 暂停浮层 -->
+<div id="pause">
+  <div class="box">
+    <h3>已暂停</h3>
+    <p id="pauseInfo">—</p>
+    <div class="btns">
+      <button class="primary" id="pResume">继续（Esc）</button>
+      <button id="pSave">退出并保存进度</button>
+      <button id="pNoSave">退出且不保存</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

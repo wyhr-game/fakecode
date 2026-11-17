@@ -1,0 +1,166 @@
+/* 魈公引擎 · 界面样式
+   目标：一眼看上去是 VS Code，不是"仿 VS Code 的主题"。 */
+
+:root{
+  --bg:#1e1e1e; --bg2:#252526; --bg3:#2d2d30;
+  --line:#3c3c3c; --line2:#252526;
+  --fg:#d4d4d4; --fg2:#9d9d9d; --fg3:#6e6e6e;
+  --blue:#569cd6; --cyan:#4ec9b0; --green:#6a9955; --orange:#ce9178;
+  --yellow:#dcdcaa; --purple:#c586c0; --sel:#04395e; --accent:#0a84ff;
+  --mono:"Consolas","Cascadia Mono","Courier New",monospace;
+  --ui:"Segoe UI","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg); color:var(--fg); font-family:var(--mono); font-size:13px;
+  user-select:none; -webkit-user-select:none;
+}
+
+/* ---------- 启动界面 ---------- */
+#splash{
+  position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(900px 500px at 50% 0%, rgba(10,132,255,.10), transparent 65%),
+    linear-gradient(180deg,#0b0f14,#11161c 60%,#0b0f14);
+}
+#splash .card{
+  width:720px; max-width:92vw; border:1px solid #23303d; border-radius:14px;
+  background:rgba(16,22,28,.92); box-shadow:0 30px 80px rgba(0,0,0,.6);
+  padding:34px 38px 30px;
+}
+#splash .brand{display:flex; align-items:baseline; gap:14px}
+#splash h1{font-family:var(--ui); font-size:30px; font-weight:600; color:#e8eef5; letter-spacing:.02em}
+#splash .en{font-size:12px; letter-spacing:.22em; color:#4a5b6b}
+#splash .ver{margin-left:auto; font-size:11px; color:#3f4c58}
+#splash .tag{margin-top:10px; font-size:14px; color:#8ea0b1; font-family:var(--ui)}
+#splash .free{
+  margin-top:14px; display:inline-block; font-size:12px; padding:4px 10px; border-radius:5px;
+  color:#5fd0a0; border:1px solid #1f4a3a; background:rgba(95,208,160,.08);
+}
+#splash .row{display:flex; align-items:center; gap:12px; margin-top:12px; font-family:var(--ui); font-size:12.5px; color:#93a4b4}
+#splash .row label{width:88px; color:#6d7d8c; flex:none}
+#splash .row input[type=range]{flex:1; accent-color:var(--accent)}
+#splash .val{width:56px; text-align:right; color:#cfe0ee; font-family:var(--mono)}
+#splash .src{
+  margin-top:16px; padding:10px 12px; border:1px solid #23303d; border-radius:8px;
+  background:#0c1218; font-size:12px; color:#7d8e9d; display:flex; align-items:center; gap:10px;
+}
+#splash .src b{color:#cfe0ee; font-weight:400}
+#splash .btns{display:flex; gap:12px; margin-top:22px}
+#splash button{
+  font-family:var(--ui); font-size:13px; padding:9px 20px; border-radius:8px; cursor:pointer;
+  border:1px solid #2b3a49; background:#16202a; color:#c8d8e6;
+}
+#splash button:hover{background:#1d2a36}
+#splash button.primary{background:#0a84ff; border-color:#0a84ff; color:#fff}
+#splash button.primary:hover{background:#0b8dff}
+#splash button:disabled{opacity:.35; cursor:not-allowed}
+#splash .foot{margin-top:18px; font-size:11px; color:#465565; font-family:var(--ui)}
+#splash .foot a{color:#5d7f9e}
+
+/* ---------- 主界面 ---------- */
+#app{height:100%;display:none;grid-template-rows:32px 1fr 22px}
+#app.on{display:grid}
+
+.titlebar{
+  display:flex; align-items:center; gap:10px; padding:0 12px;
+  background:var(--bg3); border-bottom:1px solid var(--line);
+  font-family:var(--ui); font-size:12px; color:var(--fg2);
+}
+.titlebar .dots{display:flex; gap:7px}
+.titlebar .dots i{width:11px;height:11px;border-radius:50%;display:block}
+.titlebar .dots i:nth-child(1){background:#ff5f57}
+.titlebar .dots i:nth-child(2){background:#febc2e}
+.titlebar .dots i:nth-child(3){background:#28c840}
+.titlebar .mid{margin:0 auto; color:#c7c7c7}
+
+.body{display:grid; grid-template-columns:46px 250px 1fr; overflow:hidden}
+.actbar{background:var(--bg3); border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:center; padding-top:6px; gap:4px}
+.actbar b{width:40px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--fg3);font-size:18px;font-weight:400}
+.actbar b.on{color:#fff; box-shadow:inset 2px 0 0 #fff}
+
+.side{background:var(--bg2); border-right:1px solid var(--line); display:flex; flex-direction:column; overflow:hidden}
+.side h4{font-family:var(--ui); font-size:11px; letter-spacing:.08em; color:#bbb; font-weight:400; padding:8px 12px}
+.tree{flex:1; overflow:auto; padding-bottom:20px}
+.tree::-webkit-scrollbar{width:10px}
+.tree::-webkit-scrollbar-thumb{background:#424242}
+.row{display:flex; align-items:center; gap:6px; padding:2px 8px; font-size:12.5px; color:#c9c9c9; white-space:nowrap}
+.row.dir{color:#c9c9c9}
+.row.on{background:var(--sel)}
+.row .ic{width:14px; text-align:center; color:#8fbf8f; font-size:10.5px}
+
+.editor{display:flex; flex-direction:column; overflow:hidden; min-width:0}
+.tabs{height:34px; display:flex; align-items:stretch; background:var(--bg2); border-bottom:1px solid var(--line2)}
+.tab{display:flex; align-items:center; gap:8px; padding:0 14px; font-size:12.5px; color:var(--fg2); background:var(--bg3); border-right:1px solid var(--line2)}
+.tab.on{background:var(--bg); color:#fff; box-shadow:inset 0 1px 0 var(--accent)}
+.crumb{padding:3px 14px; font-size:11.5px; color:var(--fg2); border-bottom:1px solid var(--line2); font-family:var(--ui); white-space:nowrap; overflow:hidden; background:var(--bg)}
+.code-wrap{display:flex; flex:1; overflow:hidden}
+.code{flex:1; overflow:auto; padding:6px 0 60px; font-size:13px; line-height:19px}
+.code::-webkit-scrollbar{width:14px}
+.code::-webkit-scrollbar-thumb{background:#424242; border:3px solid var(--bg); border-radius:7px}
+.ln{display:flex; min-height:19px}
+.ln .g{flex:none; width:58px; padding-right:20px; text-align:right; color:#6e7681; font-size:12px}
+.ln .t{white-space:pre; flex:1; color:var(--fg)}
+.ln.cur{background:rgba(255,255,255,.045)}
+.ln.cur .g{color:#c6c6c6}
+.caret{display:inline-block; width:2px; height:15px; background:#aeafad; vertical-align:-3px; animation:blk 1.06s steps(2) infinite}
+@keyframes blk{0%,49%{opacity:1}50%,100%{opacity:0}}
+.minimap{width:76px; border-left:1px solid var(--line2); overflow:hidden; padding-top:2px}
+.minimap i{display:block; height:2px; margin:1px 5px; background:#3a3a3a; border-radius:1px}
+
+.term{height:168px; border-top:1px solid var(--line); background:var(--bg); display:flex; flex-direction:column}
+.term .ph{display:flex; gap:18px; padding:6px 14px; font-family:var(--ui); font-size:11.5px; color:var(--fg2); border-bottom:1px solid var(--line2)}
+.term .ph b{color:#fff; font-weight:400; box-shadow:inset 0 -1px 0 var(--accent)}
+.term .pb{flex:1; overflow:auto; padding:6px 14px; font-size:12.4px; line-height:1.6}
+.term .pb .l{white-space:pre-wrap; word-break:break-word}
+.term .mu{color:var(--fg2)} .term .ok{color:var(--cyan)} .term .bad{color:#f48771} .term .wr{color:#d7ba7d}
+
+.statusbar{
+  display:flex; align-items:center; gap:16px; padding:0 12px;
+  background:#007acc; color:#fff; font-family:var(--ui); font-size:12px;
+}
+.statusbar .r{margin-left:auto; display:flex; gap:16px}
+
+/* 语法高亮 */
+.k{color:var(--purple)} .s{color:var(--orange)} .c{color:var(--green)}
+.n{color:#b5cea8} .f{color:var(--yellow)} .t{color:var(--cyan)} .d{color:var(--blue)}
+
+/* ---------- 暂停浮层 ---------- */
+#pause{
+  position:fixed; inset:0; z-index:60; display:none; align-items:center; justify-content:center;
+  background:rgba(6,9,13,.72); backdrop-filter:blur(3px);
+}
+#pause.on{display:flex}
+#pause .box{
+  width:420px; border:1px solid #24313e; border-radius:12px; background:#101820;
+  padding:24px 26px; box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+#pause h3{font-family:var(--ui); font-size:17px; color:#e6eef6; font-weight:600}
+#pause p{margin-top:8px; font-size:12.5px; color:#7f909f; font-family:var(--ui); line-height:1.7}
+#pause .btns{display:flex; flex-direction:column; gap:9px; margin-top:18px}
+#pause button{
+  font-family:var(--ui); font-size:13px; padding:10px 16px; border-radius:8px; cursor:pointer;
+  border:1px solid #2b3a49; background:#16202a; color:#c8d8e6; text-align:left;
+}
+#pause button:hover{background:#1d2a36}
+#pause button.primary{background:#0a84ff; border-color:#0a84ff; color:#fff}
+
+/* 小提示 */
+#toast{
+  position:fixed; left:50%; bottom:44px; transform:translateX(-50%);
+  background:#16202a; border:1px solid #2b3a49; color:#cfe0ee;
+  padding:9px 16px; border-radius:8px; font-size:12.5px; font-family:var(--ui);
+  opacity:0; transition:opacity .2s; pointer-events:none; z-index:80;
+}
+#toast.on{opacity:1}
+
+/* 小按钮（常用倍速） */
+#splash button.mini{
+  padding:3px 9px; font-size:11.5px; border-radius:6px; background:#141d26; color:#9fb2c4;
+  border:1px solid #22303c;
+}
+#splash button.mini:hover{background:#1b2734; color:#d7e6f4}
+#splash input[type=number]::-webkit-outer-spin-button,
+#splash input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0 }
+#splash input[type=number]{ -moz-appearance:textfield }

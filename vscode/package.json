@@ -1,0 +1,131 @@
+{
+  "name": "xiaogong-engine",
+  "displayName": "魈公引擎",
+  "description": "把代码按人的节奏重放一遍：选一个本地代码目录，它开始在编辑器里从头写代码。只读、不联网、不生成代码。",
+  "version": "1.1.1",
+  "publisher": "wyhr",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "typing",
+    "demo",
+    "fake",
+    "code",
+    "moyu"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onCommand:xiaogong.start",
+    "onCommand:xiaogong.quickStart",
+    "onCommand:xiaogong.settings",
+    "onCommand:xiaogong.pause",
+    "onCommand:xiaogong.stop",
+    "onCommand:xiaogong.bossKey"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "xiaogong.settings",
+        "title": "魈公引擎：设置并开始（打开面板）"
+      },
+      {
+        "command": "xiaogong.start",
+        "title": "魈公引擎：开始（选目录）"
+      },
+      {
+        "command": "xiaogong.quickStart",
+        "title": "魈公引擎：新建文件开始（不用选目录）"
+      },
+      {
+        "command": "xiaogong.pause",
+        "title": "魈公引擎：暂停 / 继续"
+      },
+      {
+        "command": "xiaogong.stop",
+        "title": "魈公引擎：停止"
+      },
+      {
+        "command": "xiaogong.bossKey",
+        "title": "魈公引擎：老板键（暂停并切走）"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "xiaogong.settings",
+        "key": "ctrl+alt+shift+x",
+        "mac": "cmd+alt+shift+x"
+      },
+      {
+        "command": "xiaogong.quickStart",
+        "key": "ctrl+alt+n",
+        "mac": "cmd+alt+n"
+      },
+      {
+        "command": "xiaogong.bossKey",
+        "key": "ctrl+shift+h",
+        "mac": "cmd+shift+h"
+      }
+    ],
+    "configuration": {
+      "title": "魈公引擎",
+      "properties": {
+        "xiaogong.speed": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0.1,
+          "maximum": 1000,
+          "description": "生成速度倍数，0.1 ~ 1000。≥20 合并成小块写，≥200 整行写（VS Code 的 IPC 有开销）。"
+        },
+        "xiaogong.errorRate": {
+          "type": "number",
+          "default": 0.012,
+          "minimum": 0,
+          "maximum": 0.05,
+          "description": "每个字符出错的概率（0~0.05），出错后会自动退格修正。"
+        },
+        "xiaogong.seed": {
+          "type": "number",
+          "default": 42,
+          "description": "随机种子。同一个种子，节奏完全可复现。"
+        },
+        "xiaogong.thinkEveryLines": {
+          "type": "number",
+          "default": 47,
+          "description": "每多少行插入一次思考停顿（按跨文件连续行号计）。"
+        },
+        "xiaogong.driftEveryLines": {
+          "type": "number",
+          "default": 420,
+          "description": "每多少行插入一次长时间走神。"
+        },
+        "xiaogong.bossKeyTarget": {
+          "type": "string",
+          "default": "",
+          "description": "老板键切走的去处：网址或文件绝对路径；留空则关闭所有编辑器。"
+        },
+        "xiaogong.multiDocument": {
+          "type": "boolean",
+          "default": true,
+          "description": "每个文件一个新标签页（默认开）。关掉则全程写在一个文档里，靠分隔注释区分文件。"
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "xiaogong.files",
+          "name": "魈公引擎",
+          "when": "true"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node --test test/rhythm.test.js"
+  }
+}

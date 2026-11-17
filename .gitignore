@@ -1,0 +1,10 @@
+﻿__pycache__/
+*.pyc
+node_modules/
+*.vsix
+build/
+dist/
+*.spec.bak
+.vscode/
+.DS_Store
+Thumbs.db
