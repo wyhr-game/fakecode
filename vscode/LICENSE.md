@@ -1,4 +1,4 @@
-MIT License
+﻿MIT License
 
 Copyright (c) 2026 魈公 (GitHub: @wyhr-game)
 
@@ -19,18 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-------------------------------------------------------------------------
-
-中文说明（仅供参考，不改变上面的 MIT 条款）
-
-1. 允许商用，包括打包出售、集成进商业产品、在付费服务中使用。
-2. 必须保留上面的版权声明和本许可证全文。
-3. 修改后发布，建议在说明里注明"基于 魈公引擎 修改"并附原仓库链接。
-4. 软件按"现状"提供，作者不承担使用后果。
-
-关于名字（这是请求，不是许可证条款）
-
-「魈公引擎」是原作者的名字。你改了、卖了都可以，但请不要把
-你的版本直接叫「魈公引擎」并声称是你原创——那属于另外的法律问题
-（商标与不正当竞争），不在这份许可证的范围内。
