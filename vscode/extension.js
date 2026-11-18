@@ -133,6 +133,13 @@ async function play(files, projectName, cfg) {
         tree.touch(file);
         ui.log("$ code --goto " + file);
       },
+      onMistake: (m) => {
+        // 记一笔：错的 → 对的
+        ui.log(
+          "打错 " + JSON.stringify(m.wrong) + " → 改成 " + JSON.stringify(m.correct) +
+            "（第 " + (m.at + 1) + " 个字符）",
+        );
+      },
       onProgress: (p) => {
         ui.setStatus(
           "魈公引擎：" +

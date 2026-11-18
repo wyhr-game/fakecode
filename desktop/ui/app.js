@@ -79,13 +79,23 @@ function lineToKeys(line, lineIndex, cfg, rng) {
   for (; i < line.length; i++) {
     const ch = line[i];
     if (cfg.errorRate > 0 && rng.chance(cfg.errorRate)) {
-      const wrong = makeTypo(ch, rng);
-      if (wrong) out.push({ kind: "char", char: wrong, delayMs: delay(BASE_CHAR_MS * factor) });
-      out.push({ kind: "pause", delayMs: rng.float(300, 1500) / Math.min(cfg.speed, 10) });
-      const back = wrong === "" ? rng.int(1, 2) : rng.int(1, 4);
-      for (let b = 0; b < back; b++) out.push({ kind: "backspace", delayMs: delay(BASE_CHAR_MS * 0.35) });
+      // 强制一套完整的「打错 → 发现 → 删掉 → 改对」
+      let wrong = makeTypo(ch, rng);
+      if (!wrong) {
+        const nb = NEIGHBORS[ch.toLowerCase()];
+        wrong = nb ? (ch === ch.toLowerCase() ? nb : nb.toUpperCase()) : (ch === " " ? "x" : ch + ch);
+      }
+
+      // 1) 敲错的
+      for (const w of wrong) out.push({ kind: "char", char: w, delayMs: delay(BASE_CHAR_MS * factor) });
+      // 2) 停一下：发现了
+      out.push({ kind: "pause", delayMs: rng.float(320, 1100) / Math.min(cfg.speed, 10) });
+      // 3) 删掉（几个字符退几格，不多退）
+      for (let k = 0; k < wrong.length; k++) out.push({ kind: "backspace", delayMs: delay(BASE_CHAR_MS * 0.35) });
+      // 4) 写上对的
       out.push({ kind: "char", char: ch, delayMs: delay(BASE_CHAR_MS * factor) });
-      if (rng.chance(0.35)) out.push({ kind: "pause", delayMs: rng.float(80, 260) / Math.min(cfg.speed, 10) });
+      // 5) 记一笔
+      out.push({ kind: "mistake", wrong, correct: ch });
       continue;
     }
     let base = BASE_CHAR_MS * factor;
@@ -350,6 +360,8 @@ async function play() {
             target.innerHTML = hl(text);
           } else if (k.kind === "pause" && k.delayMs >= 2000) {
             idleHint(k.delayMs);
+          } else if (k.kind === "mistake") {
+            log("  打错 " + JSON.stringify(k.wrong) + " → 改成 " + JSON.stringify(k.correct), "wr");
           }
           if (k.delayMs > 0) await sleep(k.delayMs);
         }

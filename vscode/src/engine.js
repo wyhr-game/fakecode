@@ -197,20 +197,32 @@ function planLine(line, lineNo, cfg, rng) {
     const ch = line[i];
 
     if (cfg.errorRate > 0 && rng.chance(cfg.errorRate)) {
-      const wrong = makeTypo(ch, rng);
-
+      // 强制一套完整的"犯错 → 发现 → 删掉 → 改对"
+      // 1) 先想好错的和对的，记下来
+      let wrong = makeTypo(ch, rng);
       if (wrong === "") {
-        // 漏打：什么都不敲，补上这个字就行（不能退格，退了会吃掉前面的字）
-        ev.push({ type: "pause", delay: rng.float(200, 900) });
-        ev.push({ type: "type", text: ch, delay: stepDelay(BASE_CHAR_MS * factor, cfg, rng) });
-        continue;
+        // 漏打的变体：改成一个"打错字"，保证屏幕上看得到错误
+        const nb = NEIGHBORS[ch.toLowerCase()];
+        wrong = nb ? (ch === ch.toLowerCase() ? nb : nb.toUpperCase()) : (ch === " " ? "" : ch + ch);
+        if (!wrong) wrong = "x";
       }
 
-      // 打错：敲错 → 发现 → 退一格 → 重敲
+      // 2) 敲错的
       ev.push({ type: "wrong", text: wrong, delay: stepDelay(BASE_CHAR_MS * factor, cfg, rng) });
-      ev.push({ type: "pause", delay: rng.float(300, 1500) });
-      ev.push({ type: "backspace", count: 1, delay: stepDelay(BASE_CHAR_MS * 0.3, cfg, rng) });
+
+      // 3) 停一下：发现了
+      ev.push({ type: "pause", delay: rng.float(320, 1100) });
+
+      // 4) 删掉错的（几个字符就退几格）
+      for (let k = 0; k < wrong.length; k++) {
+        ev.push({ type: "backspace", count: 1, delay: stepDelay(BASE_CHAR_MS * 0.3, cfg, rng) });
+      }
+
+      // 5) 写上对的
       ev.push({ type: "type", text: ch, delay: stepDelay(BASE_CHAR_MS * factor, cfg, rng) });
+
+      // 6) 记一笔，给外面做日志
+      ev.push({ type: "mistake", wrong, correct: ch, at: i });
 
       // 整词重打：退 extra+1 格，就补 extra+1 个，账要对平
       if (i >= 2 && rng.chance(0.22)) {
@@ -273,7 +285,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * @param {{paused:boolean,aborted:boolean}} o.state 外部可改的状态
  */
 async function run(o) {
-  const { files, cfg, onChunk, onBackspace, onProgress, state } = o;
+  const { files, cfg, onChunk, onBackspace, onProgress, state, onMistake } = o;
   const playable = files.filter((f) => f && Array.isArray(f.lines) && f.lines.length);
   if (!playable.length) return;
 
@@ -312,6 +324,9 @@ async function run(o) {
         if (!(await wait(e.delay))) return;
         if (e.type === "type" || e.type === "wrong") onChunk(e.text);
         else if (e.type === "backspace") onBackspace(e.count || 1);
+        else if (e.type === "mistake") {
+          if (typeof o.onMistake === "function") o.onMistake(e);
+        }
         else if (e.type === "newline") onChunk("\n");
       }
       done++;
