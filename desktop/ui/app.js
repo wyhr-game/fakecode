@@ -177,7 +177,7 @@ const S = {
   playlist: [],
   fi: 0,
   li: 0,
-  cfg: { speed: 1, errorRate: 0.012, seed: 42, thinkEveryLines: 47, driftEveryLines: 420 },
+  cfg: { speed: 1, errorRate: 0.012, seed: 42, thinkEveryLines: 47, driftEveryLines: 420, afterFinish: "stop" },
   volume: 0,
   paused: false,
   aborted: false,
@@ -365,7 +365,9 @@ async function play() {
       log("  wrote " + item.lines.length + " lines to " + path.split("/").pop(), "ok");
     }
 
-    if (!S.aborted) {
+    if (S.aborted) break;
+
+    if (S.cfg.afterFinish === "loop") {
       log("── 一轮播完，从头再来 ──", "mu");
       codeEl.innerHTML = "";
       miniReset();
@@ -373,7 +375,13 @@ async function play() {
       treeDirs.clear();
       S.doneLines = 0;
       await sleep(ultra ? 150 : 900);
+      continue;
     }
+
+    log("── 播放结束（设置：写完停止）──", "ok");
+    S.playing = false;
+    updateStatus(pct());
+    return;
   }
   S.playing = false;
 }
@@ -463,6 +471,12 @@ function startPlay() {
   });
   S.totalLines = S.playlist.reduce((n, it) => n + it.lines.length, 0);
   S.fi = 0; S.li = 0; S.elapsed = 0; S.doneLines = 0;
+
+  const afSel = $("afterFinish");
+  if (afSel) {
+    afSel.value = S.cfg.afterFinish || "stop";
+    afSel.addEventListener("change", (e) => { S.cfg.afterFinish = e.target.value; });
+  }
 
   $("splash").style.display = "none";
   $("app").classList.add("on");
