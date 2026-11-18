@@ -58,6 +58,7 @@ function readConfig() {
     thinkEveryLines: c.get("thinkEveryLines", 47),
     driftEveryLines: c.get("driftEveryLines", 420),
     multi: c.get("multiDocument", true),
+    afterFinish: c.get("afterFinish", "stop"),
   };
 }
 
@@ -170,6 +171,15 @@ async function play(files, projectName, cfg) {
     state.running = false;
     state.paused = false;
     ui.setStatus("魈公引擎：待机");
+  }
+
+  // 写完之后的动作：停止 / 循环
+  if (!state.aborted && cfg.afterFinish === "loop") {
+    ui.log("写完，按设置循环播放：" + projectName);
+    setTimeout(() => {
+      if (state.running) return;
+      play(files, projectName, cfg).catch((e) => ui.log("循环失败：" + (e && e.message)));
+    }, 800);
   }
 }
 

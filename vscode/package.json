@@ -2,7 +2,7 @@
   "name": "xiaogong-engine",
   "displayName": "魈公引擎",
   "description": "把代码按人的节奏重放一遍：选一个本地代码目录，它开始在编辑器里从头写代码。只读、不联网、不生成代码。",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "publisher": "wyhr",
   "license": "SEE LICENSE IN LICENSE.md",
   "engines": {
@@ -112,6 +112,19 @@
           "type": "boolean",
           "default": true,
           "description": "每个文件一个新标签页（默认开）。关掉则全程写在一个文档里，靠分隔注释区分文件。"
+        },
+        "xiaogong.afterFinish": {
+          "type": "string",
+          "enum": [
+            "stop",
+            "loop"
+          ],
+          "enumDescriptions": [
+            "写完就停（默认）",
+            "写完之后从头再播一遍"
+          ],
+          "default": "stop",
+          "description": "写完之后的行为：停止，或者继续播放（循环）。"
         }
       }
     },

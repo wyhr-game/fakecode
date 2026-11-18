@@ -96,6 +96,14 @@ function renderHtml(nonce, st) {
   <span class="val" style="width:auto;color:var(--dim2);text-align:left">分文件更像在新建文件</span>
 </div>
 
+<div class="row"><label>写完</label>
+  <select id="after">
+    <option value="stop"${st.afterFinish === "stop" ? " selected" : ""}>停止</option>
+    <option value="loop"${st.afterFinish === "loop" ? " selected" : ""}>继续播放（循环）</option>
+  </select>
+  <span class="val" style="width:auto;color:var(--dim2);text-align:left">默认写完就停</span>
+</div>
+
 <div class="btns">
   <button class="main primary" id="start">开始</button>
   <button class="main" id="cancel">取消</button>
@@ -109,6 +117,7 @@ const $ = (id) => document.getElementById(id);
 let speed = ${st.speed}, errorRate = ${st.errorRate}, seed = ${st.seed};
 let root = ${st.root ? JSON.stringify(st.root) : "null"};
 let multi = ${st.multi ? "true" : "false"};
+let afterFinish = ${JSON.stringify(st.afterFinish || "stop")};
 
 function sliderToSpeed(v){ const t = v/1000; return Number(Math.pow(10, -1 + t*4).toFixed(t > 0.75 ? 0 : 2)); }
 function speedToSlider(s){ const v = (Math.log10(Math.max(0.1, s)) + 1) / 4; return Math.round(Math.min(1, Math.max(0, v)) * 1000); }
@@ -127,12 +136,13 @@ $("err").addEventListener("input", (e) => {
 });
 $("seed").addEventListener("change", (e) => { seed = Number(e.target.value) || 0; });
 $("multi").addEventListener("change", (e) => { multi = e.target.value === "1"; });
+$("after").addEventListener("change", (e) => { afterFinish = e.target.value; });
 
 $("pick").addEventListener("click", () => {
   $("srcMeta").textContent = "正在打开选择框…";
   api.postMessage({ type: "pick" });
 });
-$("start").addEventListener("click", () => api.postMessage({ type: "start", root, cfg: { speed, errorRate, seed, multi } }));
+$("start").addEventListener("click", () => api.postMessage({ type: "start", root, cfg: { speed, errorRate, seed, multi, afterFinish } }));
 $("cancel").addEventListener("click", () => api.postMessage({ type: "cancel" }));
 
 window.addEventListener("message", (ev) => {
@@ -169,6 +179,7 @@ function openSettingsPanel(context, onStart) {
     errorRate: c.get("errorRate", 0.012),
     seed: c.get("seed", 42),
     multi: c.get("multiDocument", true),
+    afterFinish: c.get("afterFinish", "stop"),
   });
 
   panel.webview.onDidReceiveMessage(async (msg) => {
